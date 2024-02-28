@@ -1,0 +1,14 @@
+[
+  { "id": "1", "name": "Frutas" },
+  { "id": "2", "name": "Verduras" },
+  { "id": "3", "name": "Carnes" },
+  { "id": "4", "name": "Pescados y Mariscos" },
+  { "id": "5", "name": "Lácteos y Huevos" },
+  { "id": "6", "name": "Panadería" },
+  { "id": "7", "name": "Congelados" },
+  { "id": "8", "name": "Despensa" },
+  { "id": "9", "name": "Bebidas" },
+  { "id": "10", "name": "Snacks" },
+  { "id": "11", "name": "Cuidado Personal" },
+  { "id": "12", "name": "Limpieza y Hogar" }
+]
