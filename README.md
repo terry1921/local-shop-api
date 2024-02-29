@@ -29,23 +29,33 @@ Este comando lanza el servidor en http://localhost:3000. Asegúrate de que el se
 
 Para construir y ejecutar este servicio utilizando Docker, sigue los siguientes pasos:
 
-### Construir la Imagen Docker
+### Construir la Imagen Docker con Docker Compose
 
-Primero, necesitas construir una imagen Docker a partir del Dockerfile. Asegúrate de estar en el directorio que contiene el `Dockerfile` y ejecuta el siguiente comando en la terminal:
-
-```bash
-  docker build -t api-abarrotes .
-```
-
-### Ejecutar el Contenedor
-
-Una vez que la imagen se haya construido con éxito, puedes ejecutar un contenedor basado en esa imagen. Para hacerlo, utiliza el siguiente comando:
+Primero, necesitas construir una imagen Docker usando `docker-compose`, lo cual se encargará de construir la imagen basada en las instrucciones del archivo `Dockerfile` y el archivo `docker-compose.yml`. Asegúrate de estar en el directorio que contiene ambos archivos y ejecuta el siguiente comando en la terminal:
 
 ```bash
-docker run -d -p 3000:3000 api-abarrotes
+docker-compose build
 ```
 
-Este comando ejecuta el contenedor en modo "detached" (como un proceso en segundo plano) y mapea el puerto 3000 del contenedor al puerto 3000 de tu máquina local. Esto te permite acceder al servicio navegando a http://localhost:3000 en tu navegador.
+Este comando construirá la imagen Docker según lo especificado en tu `docker-compose.yml`.
+
+### Ejecutar el Contenedor con Docker Compose
+
+Una vez que la imagen se haya construido con éxito, puedes levantar el entorno y ejecutar un contenedor basado en esa imagen con `docker-compose`. Para hacerlo, utiliza el siguiente comando:
+
+```bash
+docker-compose up -d
+```
+
+Este comando levantará el contenedor en modo "detached" (como un proceso en segundo plano) y mapeará los puertos especificados en tu archivo `docker-compose.yml`, permitiéndote acceder al servicio navegando a http://localhost:3000 en tu navegador.
+
+Recuerda que si quieres detener y remover los contenedores, la red creada, y los volúmenes definidos en `docker-compose.yml`, puedes usar el siguiente comando:
+
+```bash
+docker-compose down
+```
+
+Este comando es útil para limpiar todos los recursos utilizados una vez que hayas terminado de utilizar los servicios definidos en tu archivo `docker-compose`.
 
 ## Uso
 
