@@ -9,6 +9,36 @@ const PORT = 3000;
 
 app.use(bodyParser.json());
 
+/**
+ * Middleware to simulate random failures and timeouts in an Express application.
+ * This enhances testing by introducing unpredictability in API responses.
+ */
+const randomFailureMiddleware = (req, res, next) => {
+  const failureRate = 0.1; // 10% chance of failure
+  const timeoutRate = 0.05; // 5% chance of a timeout
+  const randomNumber = Math.random();
+
+  if (randomNumber < failureRate) {
+    // Simulate an API failure
+    return res.status(500).json({ error: 'Internal server error (simulated)' });
+  } else if (randomNumber < failureRate + timeoutRate) {
+    // Simulate a real request timeout by not calling next() and not responding
+    console.log('Simulating a request timeout...');
+    // Optionally, set a real timeout to eventually end the request if needed
+    setTimeout(() => {
+      // This timeout will just log and won't send a response, effectively timing out the request
+      console.log('Timeout ended, but no response sent.');
+    }, 10000); // 10 seconds timeout for demonstration; adjust as necessary
+    return; // Important: not calling next() to simulate the timeout
+  }
+
+  // Proceed with the request if no failure or timeout is simulated
+  next();
+};
+
+// Apply the randomFailureMiddleware to all routes
+app.use(randomFailureMiddleware);
+
 const categoriesFilePath = path.join(__dirname, 'data', 'categories.json');
 const productsFilePath = path.join(__dirname, 'data', 'products.json');
 
