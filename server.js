@@ -118,6 +118,39 @@ app.post('/shopping-cart', (req, res) => {
   }
 });
 
+// DELETE /shopping-cart/:cartId
+app.delete('/shopping-cart/:cartId', (req, res) => {
+  const { cartId } = req.params;
+  if (shoppingCarts[cartId]) {
+    delete shoppingCarts[cartId];
+    res.status(200).json({ message: 'Cart deleted successfully' });
+  } else {
+    res.status(404).json({ error: 'Cart not found' });
+  }
+});
+
+// DELETE /shopping-cart
+app.delete('/shopping-cart', (req, res) => {
+  const { cartId, productId, quantity } = req.body;
+  if (!cartId || !shoppingCarts[cartId]) {
+    return res.status(404).json({ error: 'Cart not found' });
+  }
+
+  const cart = shoppingCarts[cartId];
+  if (!cart.items[productId]) {
+    return res.status(404).json({ error: 'Product not found in cart' });
+  }
+
+  if (cart.items[productId] <= quantity) {
+    delete cart.items[productId];
+  } else {
+    cart.items[productId] -= quantity;
+  }
+
+  res.status(200).json({ message: 'Product removed from cart successfully' });
+});
+
+
 function getCart(cartId) {
   const cart = shoppingCarts[cartId];
   if (!cart) {
